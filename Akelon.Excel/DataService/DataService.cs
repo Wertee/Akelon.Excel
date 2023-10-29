@@ -10,11 +10,21 @@ public class DataService
     {
         _path = path;
     }
-
+    
     public void GetClientInfoByProductNameFromOrders(string productName)
     {
         ModelsFiller modelsFiller = new();
-        ListsOfModels listsOfModelsList = modelsFiller.FillListOfModels(_path);
+        ListsOfModels listsOfModelsList = new ListsOfModels();
+        try
+        {
+            listsOfModelsList = modelsFiller.FillListOfModels(_path);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Ошибка считывания данных из файла. Возможно вы выбрали некорректный файл");
+            return;
+        }
+        
         var result = from order in listsOfModelsList.Orders
             join product in listsOfModelsList.Products on order.ProductId equals product.ProductId
             join client in listsOfModelsList.Clients on order.ClientId equals client.ClientId
@@ -53,7 +63,16 @@ public class DataService
     public void UpdateClientInfo(string organisationName,string newContactName)
     {
         using var workBook = new XLWorkbook(_path);
-        var rows = workBook.Worksheet(2).RangeUsed().RowsUsed().Skip(1);
+        IEnumerable<IXLRangeRow>? rows;
+        try
+        {
+            rows = workBook.Worksheet(2).RangeUsed().RowsUsed().Skip(1);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Ошибка получения необходимого листа в XLSX файле. Возможно вы выбрали некорректный файл");
+            return;
+        }
         bool isFound = false;
         foreach (var row in rows)
         {
@@ -89,7 +108,15 @@ public class DataService
         
         string[] months = { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
         ModelsFiller modelsFiller = new();
-        ListsOfModels listsOfModelsList = modelsFiller.FillListOfModels(_path);
+        ListsOfModels listsOfModelsList = new ListsOfModels();
+        try
+        {
+            listsOfModelsList = modelsFiller.FillListOfModels(_path);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Ошибка считывания данных из файла. Возможно вы выбрали некорректный файл");
+        }
         var result = from order in listsOfModelsList.Orders
             join product in listsOfModelsList.Products on order.ProductId equals product.ProductId
             join client in listsOfModelsList.Clients on order.ClientId equals client.ClientId

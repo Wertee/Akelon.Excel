@@ -7,16 +7,10 @@ public class Program
     {
         Console.Write("Укажите путь до файла:");
         string? path = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(path))
+        if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
         {
             Console.WriteLine("Вы не указали путь до файла");
-            return;
-        }
-
-        if (!File.Exists(path))
-        {
-            Console.WriteLine("По заданному пути файл не найден");
-            return;
+            Main();
         }
         
         _dataService = new DataService(path);
