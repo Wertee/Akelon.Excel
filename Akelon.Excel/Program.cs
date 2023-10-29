@@ -5,7 +5,7 @@ public class Program
     private static DataService _dataService;
     public static void Main()
     {
-        Console.WriteLine("Укажите путь до файла:");
+        Console.Write("Укажите путь до файла:");
         string? path = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(path))
         {
@@ -26,7 +26,7 @@ public class Program
 
     }
 
-    public static void ShowUserMenu()
+    private static void ShowUserMenu()
     {
         Console.Clear();
             
@@ -38,7 +38,8 @@ public class Program
         bool correctNumber = int.TryParse(Console.ReadLine(), out int taskNumber);
         if (!correctNumber || taskNumber < 1 || taskNumber > 4)
         {
-            Console.WriteLine("Номер операции должен быть числом от 1 до 4");
+            Console.WriteLine("Номер операции должен быть числом от 1 до 4\nДля возврата в главное меню нажмите любую кнопку");
+            Console.ReadKey();
             ShowUserMenu();
         }
         switch (taskNumber)
@@ -58,10 +59,10 @@ public class Program
         }
     }
 
-    public static void MenuTaskGetClientInfoByProductNameFromOrders()
+    private static void MenuTaskGetClientInfoByProductNameFromOrders()
     {
         Console.Clear();
-        Console.WriteLine("Введите наименование интересующего товара: ");
+        Console.Write("Введите наименование интересующего товара: ");
         string productName = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(productName))
         {
@@ -85,12 +86,12 @@ public class Program
         ShowUserMenu();
     }
 
-    public static void MenuTaskUpdateClientInfo()
+    private static void MenuTaskUpdateClientInfo()
     {
         Console.Clear();
-        Console.WriteLine("Введите полное наименование организации: ");
+        Console.Write("Введите полное наименование организации: ");
         string? organisationName = Console.ReadLine();
-        Console.WriteLine("Введите новое контактное лицо: ");
+        Console.Write("Введите новое контактное лицо: ");
         string? newContactName = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(organisationName) || string.IsNullOrWhiteSpace(newContactName))
         {
@@ -112,12 +113,12 @@ public class Program
         ShowUserMenu();
     }
 
-    public static void MenuTaskFindGoldenClientFromOrders()
+    private static void MenuTaskFindGoldenClientFromOrders()
     {
         Console.Clear();
-        Console.WriteLine("Введите интересующий вас год: ");
+        Console.Write("Введите интересующий вас год: ");
         bool isYearCorrect = int.TryParse(Console.ReadLine(), out int year);
-        Console.WriteLine("Введите номер месяца: ");
+        Console.Write("Введите номер месяца: ");
         bool isMonthCorrect = int.TryParse(Console.ReadLine(), out int month);
         if (!isYearCorrect || !isMonthCorrect || month > 12 || month < 1)
         {

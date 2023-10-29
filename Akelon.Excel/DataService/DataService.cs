@@ -18,7 +18,7 @@ public class DataService
         var result = from order in listsOfModelsList.Orders
             join product in listsOfModelsList.Products on order.ProductId equals product.ProductId
             join client in listsOfModelsList.Clients on order.ClientId equals client.ClientId
-            where product.Name == productName
+            where string.Equals(product.Name, productName, StringComparison.CurrentCultureIgnoreCase)
             select new
             {
                 orderID = order.OrderId,
@@ -33,7 +33,7 @@ public class DataService
         {
             foreach (var item in result)
             {
-            
+                Console.Clear();
                 Console.WriteLine($"Поиск по заказу товара: {item.productName}\n"+
                                   $"Клиент: {item.clientOrganisation}\n" + 
                                   $"Контактное лицо: {item.contactName}\n"+
@@ -57,13 +57,13 @@ public class DataService
         bool isFound = false;
         foreach (var row in rows)
         {
-            if (row.Cell(2).GetString() == organisationName)
+            if (string.Equals(row.Cell(2).GetString(), organisationName, StringComparison.CurrentCultureIgnoreCase))
             {
                 row.Cell(4).Value = newContactName;
                 isFound = true;
             }
         }
-
+        Console.Clear();
         try
         {
             workBook.Save();
@@ -102,6 +102,7 @@ public class DataService
             };
         if (result.Any())
         {
+            Console.Clear();
             if(result.Count() > 1)
                 Console.WriteLine("В указанном вами месяце несколько золотых клиентов");
             foreach (var item in result)
@@ -111,7 +112,10 @@ public class DataService
                                   $"Организация: {item.organisationName}\n"+
                                   $"Количество заказов {item.countOfOrders}");
             }
-            
+        }
+        else
+        {
+            Console.WriteLine("По выбранному месяцу и году заказов не найдено");
         }
     }
 
