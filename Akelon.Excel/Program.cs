@@ -5,6 +5,7 @@ public class Program
     private static DataService _dataService;
     public static void Main()
     {
+        Console.Clear();
         Console.Write("Укажите путь до файла:");
         string? path = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
@@ -25,10 +26,11 @@ public class Program
         Console.Clear();
             
         Console.WriteLine("Выберите операцию:\n" +
-                          "1. Получить информацию о клиентах заказавших товар\n" +
-                          "2. Изменить контактное лицо для организации\n" +
-                          "3. Узнать золотого клиента\n" +
-                          "4. Выйти из программы");
+                          "1. Ввесли новый путь до файла\n"+
+                          "2. Получить информацию о клиентах заказавших товар\n" +
+                          "3. Изменить контактное лицо для организации\n" +
+                          "4. Узнать золотого клиента\n" +
+                          "5. Выйти из программы");
         bool correctNumber = int.TryParse(Console.ReadLine(), out int taskNumber);
         if (!correctNumber || taskNumber < 1 || taskNumber > 4)
         {
@@ -39,15 +41,18 @@ public class Program
         switch (taskNumber)
         {
             case 1:
-                MenuTaskGetClientInfoByProductNameFromOrders();
+                Main();
                 break;
             case 2:
-                MenuTaskUpdateClientInfo();
+                MenuTaskGetClientInfoByProductNameFromOrders();
                 break;
             case 3:
-                MenuTaskFindGoldenClientFromOrders();
+                MenuTaskUpdateClientInfo();
                 break;
             case 4:
+                MenuTaskFindGoldenClientFromOrders();
+                break;
+            case 5:
                 Environment.Exit(0);
                 break;
         }
