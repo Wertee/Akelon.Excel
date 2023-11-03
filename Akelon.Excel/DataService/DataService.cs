@@ -127,12 +127,13 @@ public class DataService
                 organisationName = ord.Key,
                 countOfOrders = ord.Count()
             };
-        if (result.Any())
+        var maxResult = result.Where(x => x.countOfOrders == result.Max(x => x.countOfOrders));
+        if (maxResult.Any())
         {
             Console.Clear();
-            if(result.Count() > 1)
+            if(maxResult.Count() > 1)
                 Console.WriteLine("В указанном вами месяце несколько золотых клиентов");
-            foreach (var item in result)
+            foreach (var item in maxResult)
             {
                 Console.WriteLine("========================");
                 Console.WriteLine($"Золотой клиент за {months[month-1]}\n"+
