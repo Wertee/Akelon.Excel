@@ -32,7 +32,7 @@ public class Program
                           "4. Узнать золотого клиента\n" +
                           "5. Выйти из программы");
         bool correctNumber = int.TryParse(Console.ReadLine(), out int taskNumber);
-        if (!correctNumber || taskNumber < 1 || taskNumber > 4)
+        if (!correctNumber || taskNumber < 1 || taskNumber > 5)
         {
             Console.WriteLine("Номер операции должен быть числом от 1 до 4\nДля возврата в главное меню нажмите любую кнопку");
             Console.ReadKey();
